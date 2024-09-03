@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { addCoupon, getAllCoupons, editCoupon, deleteCoupon, getCouponsById, getCouponsByCouponId } = require("../controllers/coupons");
-const { requireSignIn, adminMiddleware } = require("../common-middleware");
+const { requireSignIn, adminMiddleware, userMiddleware } = require("../common-middleware");
 
 // Define your routes
 router.post("/admin/addCoupon", requireSignIn, adminMiddleware, addCoupon);
@@ -13,6 +13,6 @@ router.delete("/admin/deleteCoupons/:id",requireSignIn, adminMiddleware, deleteC
 
 router.get("/user/coupons", getAllCoupons);
 router.get("/user/getCouponsByCouponId/:couponCode", getCouponsByCouponId);
-
+router.put("/user/editCoupons/:id", requireSignIn, userMiddleware, editCoupon);
 
 module.exports = router;
