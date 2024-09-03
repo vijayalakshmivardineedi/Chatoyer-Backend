@@ -14,7 +14,6 @@ exports.addOrder = async (req, res) => {
       orderStatus
     } = req.body;
 
-    // Save the order
     const newOrder = new Order({
       user,
       address,

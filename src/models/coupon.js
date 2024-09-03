@@ -39,6 +39,10 @@ const couponSchema = new mongoose.Schema(
       type: Boolean,
       default: true,
     },
+    isUsed: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true }
 );

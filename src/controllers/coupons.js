@@ -12,7 +12,6 @@ const generateCouponCode = () => {
       for (let i = 0; i < 6; i++) {
         const randomIndex = Math.floor(Math.random() * characters.length);
         const randomChar = characters[randomIndex];
-        // Check if the character is a number
         if (/\d/.test(randomChar)) {
           numberOfNumbers++;
         }
@@ -23,7 +22,6 @@ const generateCouponCode = () => {
     return couponCode;
 };
 
-// Your other controller functions
 
 exports.addCoupon = async (req, res) => {
     try {
@@ -36,15 +34,13 @@ exports.addCoupon = async (req, res) => {
         expiryDate,
         applicableFor,
       } = req.body;
-  
-      // Check if the coupon code already exists
+
       const couponCode = generateCouponCode();
       const existingCoupon = await Coupon.findOne({ couponCode });
       if (existingCoupon) {
         return res.status(400).json({ success: false, message: "Coupon code already exists." });
       }
   
-      // Create a new coupon
       const newCoupon = new Coupon({
         couponCode,
         offerName,
@@ -55,8 +51,7 @@ exports.addCoupon = async (req, res) => {
         expiryDate,
         applicableFor,
       });
-  
-      // Save the new coupon to the database
+
       await newCoupon.save();
   
       return res.status(201).json({ success: true, message: "Coupon added successfully.", coupon: newCoupon });
@@ -65,8 +60,6 @@ exports.addCoupon = async (req, res) => {
       return res.status(500).json({ success: false, message: "An error occurred while adding the coupon." });
     }
   };
-  
-// Your other controller functions
 
 
 exports.getAllCoupons = async (req, res) => {
@@ -100,14 +93,11 @@ exports.getCouponsById = async (req, res) => {
     }
 };
 
-  
-  // Edit a coupon by ID
+
   exports.editCoupon = async (req, res) => {
     try {
       const couponId = req.params.id;
       const updates = req.body;
-  
-      // Update the coupon
       const updatedCoupon = await Coupon.findByIdAndUpdate(couponId, updates, { new: true });
   
       if (!updatedCoupon) {
@@ -119,13 +109,11 @@ exports.getCouponsById = async (req, res) => {
       return res.status(500).json({ success: false, message: error });
     }
   };
-  
-  // Delete a coupon by ID
+
   exports.deleteCoupon = async (req, res) => {
     try {
       const couponId = req.params.id;
-  
-      // Delete the coupon
+
       const deletedCoupon = await Coupon.findByIdAndDelete(couponId);
   
       if (!deletedCoupon) {
